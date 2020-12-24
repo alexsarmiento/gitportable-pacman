@@ -3,7 +3,6 @@
 # in Git for Windows Portable
 # To be run from a git-bash session.
 
-MSYSTEM=MSYS
 GITURL="https://github.com/git-for-windows/git-sdk-64.git"
 RAWURL="https://github.com/git-for-windows/git-sdk-64/raw"
 
@@ -99,7 +98,5 @@ wait
 
 ### Wrap up
 
-sed -i 's/set bell-style visible/set bell-style none/' /etc/inputrc
 pacman -Sy
 pacman -S filesystem libxml2 liblzma icu gcc-libs bash-completion --noconfirm
-pacman -Rsc git-extra --noconfirm
