@@ -6,6 +6,9 @@
 GITURL="https://github.com/git-for-windows/git-sdk-64.git"
 RAWURL="https://github.com/git-for-windows/git-sdk-64/raw"
 
+rm -rf   /c/Users/david/bag/gitportable-pacman/git-sdk-64
+s=99 ; read  -rsp $"Wait $s seconds or press Escape-key or Arrow key to continue..." -t $s -d $'\e'; echo;echo;
+
 # Clone tiny blobless shallow repo
 git clone \
 	--depth 20 \
@@ -18,9 +21,10 @@ git pull
 
 ### Pre install minimal pacman bootstrap
 d="var/lib/pacman/local"
-pkgs=('pacman-5' 'pacman-mirrors-' 'msys2-keyring-')
+pkgs=('pacman-6' 'pacman-mirrors-' 'msys2-keyring-')
 for j in ${pkgs[@]} ; do
-	pacvers=$(basename $( git show main:$d|grep "$j" ))
+	#pacvers=$(basename $( git show main:$d|grep "$j" ))
+	pacvers=$( git show main:$d|grep "$j" )
 	echo $pacvers
 	shfiles=$(curl -sSL $RAWURL/main/$d/$pacvers/files )	
 	for f in $shfiles
@@ -36,8 +40,9 @@ for j in ${pkgs[@]} ; do
 	 fi  
 	done
 	wait
+  s=10 ; read  -rsp $"Wait $s seconds or press Escape-key or Arrow key to continue..." -t $s -d $'\e'; echo;echo;
 done
-wait	
+wait
 
 mkdir -p /var/lib/pacman
 pacman-key --init
