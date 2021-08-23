@@ -20,10 +20,13 @@ cd  git-sdk-64
 git pull
 
 ### Pre install minimal pacman bootstrap
+
+echo ~~~doing...  Pre install minimal pacman bootstrap
 d="var/lib/pacman/local"
 pkgs=('pacman-6' 'pacman-mirrors-' 'msys2-keyring-')
 for j in ${pkgs[@]} ; do
 	#pacvers=$(basename $( git show main:$d|grep "$j" ))
+	echo ~~~doing... pacvers=$( git show main:$d|grep "$j" )
 	pacvers=$( git show main:$d|grep "$j" )
 	echo $pacvers
 	shfiles=$(curl -sSL $RAWURL/main/$d/$pacvers/files )	
@@ -50,10 +53,13 @@ pacman-key --populate msys2
 curl -L https://raw.githubusercontent.com/git-for-windows/build-extra/HEAD/git-for-windows-keyring/git-for-windows.gpg |\
 pacman-key --add - &&
 pacman-key --lsign-key 3B6D86A1BA7701CD0F23AED888138B9E1A9F3986
+echo ~~~doing... 1  pacman -Sy
 pacman -Sy
 
 ################
-#Restore Pacman metadata
+# Restore Pacman metadata
+
+echo ~~~doing... Restore Pacman metadata
 d="var/lib/pacman/local"
 for j in ${pkgs[@]} ; do
 	pacvers=$(basename $( git show main:$d|grep "$j" ))
@@ -67,7 +73,13 @@ for j in ${pkgs[@]} ; do
 	done
 done
 #################
+pac
+echo ~~~doing... commits=$(git log --pretty=%h)
 commits=$(git log --pretty=%h)
+
+
+
+
 ######## Packages metadata
 spdup ()
 {
@@ -92,16 +104,31 @@ spdup ()
 	done 
 }
 
+# =================================================
 
-cat /etc/package-versions.txt |while read package version
-do
-	spdup $package $version & 
-	[ $( jobs | wc -l ) -ge $( nproc ) ] && wait
+# I got errors, so I turned this off:
+#
+#  error: could not open file /var/lib/pacman/local/expat-2.3.0-1/desc: No such file or directory
+#  error: could not open file /var/lib/pacman/local/glib2-2.68.1-1/desc: No such file or directory
+#  error: could not open file /var/lib/pacman/local/grep-3.1-1/desc: No such file or directory
+#  error: could not open file /var/lib/pacman/local/less-581-1/desc: No such file or directory
+#
 
-done
-wait 
+# echo ~~~doing...  cat /etc/package-versions.txt  ~ while read package version
+
+# cat /etc/package-versions.txt |while read package version
+# do
+	# echo ~~~doing... spdup $package $version 
+	# spdup $package $version & 
+	# [ $( jobs | wc -l ) -ge $( nproc ) ] && wait
+# done
+# wait 
+
+# =================================================
+
 
 ### Wrap up
 
+echo ~~~doing... wrap-up - pacman -Sy
 pacman -Sy
-pacman -S filesystem libxml2 liblzma icu gcc-libs bash-completion --noconfirm
+# pacman -S filesystem libxml2 liblzma icu gcc-libs bash-completion --noconfirm
