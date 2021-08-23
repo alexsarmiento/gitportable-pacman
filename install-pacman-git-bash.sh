@@ -85,6 +85,8 @@ spdup ()
 {
 	package=$1
 	version=$2
+  
+  # I commented out some if statements. This helped, but I am not sure it is the correct solution.
 	for cs in $commits ; do
     d=var/lib/pacman/local/$package-$version
 		[ ! -d /$d ] && mkdir -p /$d
@@ -100,7 +102,7 @@ spdup ()
 				 [ ! -f "/$d/$f" ] && curl -sSL "$RAWURL/$cs/$d/$f" -o /$d/$f 
 				# fi
 			done
-      # this seems to stop after the first commit in the list.
+      # this seems to stop it after the first commit in the list.
 			break
 		# fi
 	done 

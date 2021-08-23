@@ -367,8 +367,11 @@ $
 
 =================================================
 
+
 error: failed to commit transaction (conflicting files)
+
 libxml2: /usr/share/licenses/libxml2/COPYING exists in filesystem
+
 Errors occurred, no packages were upgraded.
 
 
@@ -397,7 +400,9 @@ Total Installed Size:  1.33 MiB
 (1/1) checking available disk space                                                      [###################################################] 100%
 :: Processing package changes...
 
+
 error: could not create temp directory
+
 
 (1/1) upgrading libxml2                                                                  [###################################################] 100%
 
