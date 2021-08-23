@@ -146,14 +146,15 @@ wait
 echo ~~~doing... wrap-up - pacman -Sy
 pacman -Sy
 
-
-# pacman -S filesystem libxml2 liblzma icu gcc-libs bash-completion --noconfirm
-# pacman -S filesystem  bash-completion --noconfirm
-
-# pacman -S filesystem libxml2 liblzma icu gcc-libs bash-completion --noconfirm
-# pacman -S  libxml2 --noconfirm
+# pacman -S  filesystem   --noconfirm
 # pacman -S  liblzma --noconfirm
 # pacman -S  icu --noconfirm
 # pacman -S  gcc-libs --noconfirm
 # pacman -S  bash-completion --noconfirm
+
+# I got errors when install libxml2
+# pacman -S  libxml2 --noconfirm
+
+# pacman -S filesystem libxml2 liblzma icu gcc-libs bash-completion --noconfirm
+# pacman -S filesystem libxml2 liblzma icu gcc-libs bash-completion --noconfirm
 
