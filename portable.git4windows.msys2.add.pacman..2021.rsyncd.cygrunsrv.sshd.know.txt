@@ -265,6 +265,9 @@ msys2 ssh server Connection closed by remote host.
 
 errors on xps.
 
+( 2021-08-23 I modified the install pacman .sh script to attempt to address it )
+
+
 error: could not open file /var/lib/pacman/local/expat-2.2.10-1/desc: No such file or directory
 error: could not open file /var/lib/pacman/local/file-5.39-2/desc: No such file or directory
 error: could not open file /var/lib/pacman/local/findutils-4.7.0-1/desc: No such file or directory
@@ -351,6 +354,60 @@ $
 #@  
 #@  
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   2021-08-22[Aug-Sun]12-32PM 
+
+
+ pacman -S filesystem libxml2 liblzma icu gcc-libs bash-completion --noconfirm
+ 
+ pacman -S  libxml2 --noconfirm
+ pacman -S  liblzma --noconfirm
+ pacman -S  icu --noconfirm
+ pacman -S  gcc-libs --noconfirm
+ pacman -S  bash-completion --noconfirm
+
+
+=================================================
+
+error: failed to commit transaction (conflicting files)
+libxml2: /usr/share/licenses/libxml2/COPYING exists in filesystem
+Errors occurred, no packages were upgraded.
+
+
+rm /usr/share/licenses/libxml2/COPYING
+
+
+C:\prg\PortableGit\usr\share\licenses\libxml2
+
+_____________
+
+david@redyo7 MINGW64 ~/bag/gitportable-pacman (master)
+
+$  pacman -S  libxml2 --noconfirm
+resolving dependencies...
+looking for conflicting packages...
+
+Packages (1) libxml2-2.9.12-1
+
+Total Installed Size:  1.33 MiB
+
+:: Proceed with installation? [Y/n]
+(1/1) checking keys in keyring                                                           [###################################################] 100%
+(1/1) checking package integrity                                                         [###################################################] 100%
+(1/1) loading package files                                                              [###################################################] 100%
+(1/1) checking for file conflicts                                                        [###################################################] 100%
+(1/1) checking available disk space                                                      [###################################################] 100%
+:: Processing package changes...
+
+error: could not create temp directory
+
+(1/1) upgrading libxml2                                                                  [###################################################] 100%
+
+
+
+msys2 pacman -S libxml2-2.9.12-1  git for windows error: could not create temp directory
+
+
+
+_____________
 
 
 

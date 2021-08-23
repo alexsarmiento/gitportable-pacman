@@ -9,9 +9,9 @@ RAWURL="https://github.com/git-for-windows/git-sdk-64/raw"
 rm -rf   /c/Users/david/bag/gitportable-pacman/git-sdk-64
 s=99 ; read  -rsp $"Wait $s seconds or press Escape-key or Arrow key to continue..." -t $s -d $'\e'; echo;echo;
 
-# Clone tiny blobless shallow repo
+# Clone tiny blobless shallow repo ( 2021-08-22 - was depth 20)
 git clone \
-	--depth 20 \
+	--depth 3 \
 	--filter=blob:none \
 	--no-checkout \
 	$GITURL
@@ -72,42 +72,40 @@ for j in ${pkgs[@]} ; do
 		fi
 	done
 done
+
 #################
 pac
 echo ~~~doing... commits=$(git log --pretty=%h)
 commits=$(git log --pretty=%h)
 
 
-
-
 ######## Packages metadata
+
 spdup ()
 {
 	package=$1
 	version=$2
-  # set -vx
 	for cs in $commits ; do
     d=var/lib/pacman/local/$package-$version
 		[ ! -d /$d ] && mkdir -p /$d
 		git show $cs:$d >/dev/null 2>&1
-		# git show $cs:$d 
 		# if [ $? -eq 0 ]
 		# then
       echo ~~~doing... in spdup
 			echo -e "$cs\t$package $version"
 			for f in desc files install mtree; do 
 				git show $cs:$d/$f > /dev/null 2>&1
-				# git show $cs:$d/$f 
 				# if [ $? -eq 0 ]
 				# then
 				 [ ! -f "/$d/$f" ] && curl -sSL "$RAWURL/$cs/$d/$f" -o /$d/$f 
 				# fi
 			done
+      # this seems to stop after the first commit in the list.
 			break
 		# fi
 	done 
-  # set +vx
 }
+
 
 # =================================================
 
@@ -124,7 +122,11 @@ spdup ()
 #
 
 echo ~~~doing...  cat /etc/package-versions.txt  ~ while read package version
-set -vx
+
+
+# show verbose package metadata updates..
+# set -vx
+
 cat /etc/package-versions.txt |while read package version
 do
 	echo ~~~doing... spdup $package $version 
@@ -133,6 +135,7 @@ do
 done
 wait 
 
+
 # =================================================
 
 
@@ -140,4 +143,15 @@ wait
 
 echo ~~~doing... wrap-up - pacman -Sy
 pacman -Sy
+
+
 # pacman -S filesystem libxml2 liblzma icu gcc-libs bash-completion --noconfirm
+# pacman -S filesystem  bash-completion --noconfirm
+
+# pacman -S filesystem libxml2 liblzma icu gcc-libs bash-completion --noconfirm
+# pacman -S  libxml2 --noconfirm
+# pacman -S  liblzma --noconfirm
+# pacman -S  icu --noconfirm
+# pacman -S  gcc-libs --noconfirm
+# pacman -S  bash-completion --noconfirm
+
