@@ -85,44 +85,53 @@ spdup ()
 {
 	package=$1
 	version=$2
+  # set -vx
 	for cs in $commits ; do
-	    d=var/lib/pacman/local/$package-$version
+    d=var/lib/pacman/local/$package-$version
 		[ ! -d /$d ] && mkdir -p /$d
 		git show $cs:$d >/dev/null 2>&1
-		if [ $? -eq 0 ]
-		then
+		# git show $cs:$d 
+		# if [ $? -eq 0 ]
+		# then
+      echo ~~~doing... in spdup
+			echo -e "$cs\t$package $version"
 			for f in desc files install mtree; do 
 				git show $cs:$d/$f > /dev/null 2>&1
-				if [ $? -eq 0 ]
-				then
+				# git show $cs:$d/$f 
+				# if [ $? -eq 0 ]
+				# then
 				 [ ! -f "/$d/$f" ] && curl -sSL "$RAWURL/$cs/$d/$f" -o /$d/$f 
-				fi
+				# fi
 			done
-			echo -e "$cs\t$package $version"
 			break
-		fi
+		# fi
 	done 
+  # set +vx
 }
 
 # =================================================
 
-# I got errors, so I turned this off:
+# I got errors 2021-08-23. I didn't get these previously. I have been trying to figure out a solution.
 #
+#  pacman -S zip
+# 
 #  error: could not open file /var/lib/pacman/local/expat-2.3.0-1/desc: No such file or directory
 #  error: could not open file /var/lib/pacman/local/glib2-2.68.1-1/desc: No such file or directory
 #  error: could not open file /var/lib/pacman/local/grep-3.1-1/desc: No such file or directory
 #  error: could not open file /var/lib/pacman/local/less-581-1/desc: No such file or directory
 #
+#  it installs it even with the error present. 
+#
 
-# echo ~~~doing...  cat /etc/package-versions.txt  ~ while read package version
-
-# cat /etc/package-versions.txt |while read package version
-# do
-	# echo ~~~doing... spdup $package $version 
-	# spdup $package $version & 
-	# [ $( jobs | wc -l ) -ge $( nproc ) ] && wait
-# done
-# wait 
+echo ~~~doing...  cat /etc/package-versions.txt  ~ while read package version
+set -vx
+cat /etc/package-versions.txt |while read package version
+do
+	echo ~~~doing... spdup $package $version 
+	spdup $package $version & 
+	[ $( jobs | wc -l ) -ge $( nproc ) ] && wait
+done
+wait 
 
 # =================================================
 
