@@ -206,7 +206,10 @@ mkdir -p ~/.ssh
 # set password..
 pf=~/.ssh/pwf99
 echo $passwd>$pf
-chmod 700 $pf
+chmod 600 $pf
+chmod og-r $pf
+chmod og-r ./pwf99
+ll
 rsync  -avvz -i --progress  --password-file=$pf $user@$srv::cDrive/Windows/regedit.exe  ~/tmp2/
 
 
