@@ -8,7 +8,7 @@ RAWURL="https://github.com/git-for-windows/git-sdk-64/raw"
 
 # Clone tiny blobless shallow repo
 git clone \
-	--depth 20 \
+	--depth 50 \
 	--filter=blob:none \
 	--no-checkout \
 	$GITURL
