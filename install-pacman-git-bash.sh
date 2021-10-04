@@ -18,7 +18,8 @@ git pull
 
 ### Pre install minimal pacman bootstrap
 d="var/lib/pacman/local"
-pkgs=('pacman-5' 'pacman-mirrors-' 'msys2-keyring-')
+mkdir -p "/$d"
+pkgs=('pacman-6' 'pacman-mirrors-' 'msys2-keyring-')
 for j in ${pkgs[@]} ; do
 	pacvers=$(basename $( git show main:$d|grep "$j" ))
 	echo $pacvers
