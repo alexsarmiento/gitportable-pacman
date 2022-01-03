@@ -6,6 +6,7 @@
 GITURL="https://github.com/git-for-windows/git-sdk-64.git"
 RAWURL="https://github.com/git-for-windows/git-sdk-64/raw"
 
+rm -rf git-sdk-64
 # Clone tiny blobless shallow repo
 git clone \
 	--depth 50 \
@@ -45,6 +46,7 @@ pacman-key --init
 pacman-key --populate msys2
 curl -L https://raw.githubusercontent.com/git-for-windows/build-extra/HEAD/git-for-windows-keyring/git-for-windows.gpg |\
 pacman-key --add - &&
+pacman-key --lsign-key E8325679DFFF09668AD8D7B67115A57376871B1C &&
 pacman-key --lsign-key 3B6D86A1BA7701CD0F23AED888138B9E1A9F3986
 pacman -Sy
 
@@ -99,5 +101,22 @@ wait
 
 ### Wrap up
 
-pacman -Sy
-pacman -S filesystem libxml2 liblzma icu gcc-libs bash-completion --noconfirm
+pacman -Sy filesystem libxml2 liblzma icu gcc-libs bash-completion --noconfirm
+
+# Sync new repositories. This will also allow downgrades as well. This will also kill the MSYS2
+echo
+echo
+echo "###################################################################"
+echo "#                                                                 #"
+echo "#                                                                 #"
+echo "#                   W   A   R   N   I   N   G                     #"
+echo "#                                                                 #"
+echo "#    Select Y to re-install MSYS2. After restart, manually run    #"
+echo "#          'pacman -Suu' to update rest of applications.          #"
+echo "#                                                                 #"
+echo "#                                                                 #"
+echo "###################################################################"
+echo
+echo
+read -rs -p $"Press escape or arrow key to continue or wait 5 seconds..." -t 5 -d $'\e';echo;
+pacman -Syyuu
